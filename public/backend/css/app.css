@@ -1,0 +1,20 @@
+.rm-icon{
+    padding: 0px 7px 4px 7px;
+    background-color: rgba(25, 53, 190, 0.055);
+    color: crimson;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+}
+
+.company i{
+    padding: 5px;
+    background-color: rgba(25, 53, 190, 0.055);
+    border-radius: 5px;
+    font-size: 13px !important;
+}
+
+mark{
+    background:rgb(1, 205, 144);
+    color:white;
+}
