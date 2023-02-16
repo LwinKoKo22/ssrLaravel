@@ -67,6 +67,15 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="{{ route('admin.employee.index') }}" class="nav-link @yield('employee-active')">
+              <i class="nav-icon fa-solid fa-users"></i>
+              <p>
+                Employee
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

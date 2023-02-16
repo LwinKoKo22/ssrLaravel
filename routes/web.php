@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\CompanyController;
+use App\Http\Controllers\Backend\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,5 @@ require __DIR__.'/auth.php';
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::get('/',[PageController::class,'index'])->name('dashboard');
     Route::resource('company',CompanyController::class);
+    Route::resource('employee',EmployeeController::class);
 });
