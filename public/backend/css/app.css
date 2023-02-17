@@ -18,3 +18,7 @@ mark{
     background:rgb(1, 205, 144);
     color:white;
 }
+
+#datatable_filter{
+    display: none !important;
+}

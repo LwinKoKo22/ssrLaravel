@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use datatables;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,10 +21,32 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::all();
-        return view('backend.company.index',compact('companies'));
+
+        return view('backend.company.index');
     }
 
+
+    public function ssd(){
+        $data = Company::query();
+        return datatables()->of($data)
+        ->editColumn('logo',function($each){
+            return '<img src="'.$each->logo_image_path().'" width="80px" height="80px"/>';
+        })
+        ->editColumn('website',function($each){
+            return '<a href="'.$each->website.'" target="_blank">'.$each->website.'</a>';
+        })
+        ->editColumn('created_at',function($each){
+            return $each->created_at->format('Y-m-d');
+        })
+        ->addColumn('action',function($each){
+            $edit_icon = '<a href="'.route('admin.company.edit',$each->id).'" class="text-warning mr-2"><i class="fa-solid fa-pen-to-square"></i></a>';
+            $info_icon = '<a href="'.route('admin.company.show',$each->id).'" class="text-primary mr-2"><i class="fa-solid fa-circle-info"></i></a>';
+            $delete_icon = '<a href="#" data-id="'.$each->id.'" class="text-danger delete_btn"><i class="fa-solid fa-trash"></i></a>';
+            return "$edit_icon" . "$info_icon" . "$delete_icon";
+        })
+        ->rawColumns(['logo','website','action'])
+        ->toJson();
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -117,6 +140,9 @@ class CompanyController extends Controller
             Storage::disk('public')->delete('/backend/logo/'.$company->logo);
         }
         $company->delete();
-        return redirect()->route('admin.company.index')->with('success','Successfully deleted');
+        return response()->json([
+            'status'=>'success',
+            'message'=>'Successfully deleted'
+        ]);
     }
 }

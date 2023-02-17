@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use datatables;
 use App\Models\Company;
 use App\Models\Employee;
 use Illuminate\Http\Request;
@@ -22,6 +23,24 @@ class EmployeeController extends Controller
         return view('backend.employee.index',compact('employees'));
     }
 
+    public function ssd(){
+        $data = Employee::query();
+        return datatables()->of($data)
+        ->addColumn('company',function($each){
+            return $each->company ? $each->company->name : "-";
+        })
+        ->editColumn('created_at',function($each){
+            return $each->created_at->format('Y-m-d');
+        })
+        ->addColumn('action',function($each){
+            $edit_icon = '<a href="'.route('admin.employee.edit',$each->id).'" class="text-warning mr-2"><i class="fa-solid fa-pen-to-square"></i></a>';
+            $info_icon = '<a href="'.route('admin.employee.show',$each->id).'" class="text-primary mr-2"><i class="fa-solid fa-circle-info"></i></a>';
+            $delete_icon = '<a href="#" data-id="'.$each->id.'" class="text-danger delete_btn"><i class="fa-solid fa-trash"></i></a>';
+            return "$edit_icon" . "$info_icon" . "$delete_icon";
+        })
+        ->rawColumns(['logo','website','action'])
+        ->toJson();
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -101,6 +120,9 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
-        return redirect()->route('admin.employee.index')->with('success','Successfully Deleted');
+        return response()->json([
+            'status'=>'success',
+            'message'=>'Successfully deleted'
+        ]);
     }
 }

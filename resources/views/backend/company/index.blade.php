@@ -23,33 +23,11 @@
                                 <th>Email</th>
                                 <th class="no-action">Logo</th>
                                 <th class="no-action">Website</th>
+                                <th class="no-action">Create At</th>
                                 <th class="no-action">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($companies as $company)
-                                <tr>
-                                    <td>{{ $company->name }}</td>
-                                    <td>{{ $company->email }}</td>
-                                    <td>
-                                        @if($company->logo)
-                                        <img src="{{ $company->logo_image_path() }}" alt="logo_image" width="80px" height="80px"/>
-                                        @else
-                                        <img src="https://via.placeholder.com/100x100" id="logo_image" width="80px" height="80px">
-                                        @endif
-                                    </td>
-                                    <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
-                                    <th>
-                                        <a href="{{ route('admin.company.edit',$company->id) }}" class="text-warning mr-1"><i class="fa-solid fa-pen-to-square"></i></a>
-                                        <a href="{{ route('admin.company.show',$company->id) }}" class="text-primary mr-1"><i class="fa-solid fa-circle-info"></i></a>
-                                        <form action="{{ route('admin.company.destroy',$company->id) }}" method="POST" id="submit_form">
-                                            @csrf
-                                            @method('DELETE')
-                                            <a href="#"  class="text-danger deleteBtn" type="submit"><i class="fa-solid fa-trash"></i></a>
-                                        </form>
-                                    </th>
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -60,15 +38,27 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
-            var datatable = $('#datatable').DataTable({
-                "columnDefs": [{
-                    "targets": "no-action",
-                    "searchable": false,
-                    "sortable":false,
-                }],
-                mark : true
+        var datatable = $('#datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '/admin/company/datatable/ssd',
+                columns : [
+                    {data :"name" , name : "name"},
+                    {data : "email" , name : "email"},
+                    {data : "logo" , name : "logo"},
+                    {data : "website" , name : "website"},
+                    {data : "created_at" , name : "created_at"},
+                    {data : "action" , name : "action"}
+                ],
+                columnDefs: [
+                    { 
+                        targets: "no-action", 
+                        searchable : false,
+                        sortable : false
+                    },
+                ]
             });
-            $(document).on('click','.deleteBtn',function(e){
+            $(document).on('click','.delete_btn',function(e){
                 e.preventDefault();
                 var id = $(this).data('id');
                 Swal.fire({
@@ -80,7 +70,20 @@
                 confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    $('#submit_form').submit();
+                  $.ajax({
+                    url : "/admin/company/" + id,
+                    type : "DELETE",
+                    success : function(res){
+                        if(res.status == 'success'){
+                            datatable.ajax.reload();
+                            Swal.fire(
+                            'Deleted!',
+                            res.message,
+                            'success'
+                            )
+                        }
+                    }   
+                  })
                 }
                 })
             })

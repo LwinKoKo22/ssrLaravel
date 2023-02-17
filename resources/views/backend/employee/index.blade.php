@@ -24,28 +24,11 @@
                                 <th>Company</th>
                                 <th>Email</th>
                                 <th>Phone</th>
+                                <th class="no-action">Create At</th>
                                 <th class="no-action">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($employees as $employee)
-                                <tr>
-                                    <td>{{ $employee->fname }}</td>
-                                    <td>{{ $employee->lname }}</td>
-                                    <td>{{ $employee->company? $employee->company->name : '-' }}</td>
-                                    <td>{{ $employee->email }}</td>
-                                   <td>{{ $employee->phone }}</td>
-                                    <th>
-                                        <a href="{{ route('admin.employee.edit',$employee->id) }}" class="text-warning mr-1"><i class="fa-solid fa-pen-to-square"></i></a>
-                                        <a href="{{ route('admin.employee.show',$employee->id) }}" class="text-primary mr-1"><i class="fa-solid fa-circle-info"></i></a>
-                                        <form action="{{ route('admin.employee.destroy',$employee->id) }}" method="POST" id="submit_form">
-                                            @csrf
-                                            @method('DELETE')
-                                            <a href="#"  class="text-danger deleteBtn" type="submit"><i class="fa-solid fa-trash"></i></a>
-                                        </form>
-                                    </th>
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -56,15 +39,28 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
-            var datatable = $('#datatable').DataTable({
-                "columnDefs": [{
-                    "targets": "no-action",
-                    "searchable": false,
-                    "sortable":false,
-                }],
-                mark : true
+        var datatable = $('#datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '/admin/employee/datatable/ssd',
+                columns : [
+                    {data :"fname" , name : "fname"},
+                    {data :"lname" , name : "lname"},
+                    {data :"company" , name : "company"},
+                    {data : "email" , name : "email"},
+                    {data : "phone" , name : "phone"},
+                    {data : "created_at" , name : "created_at"},
+                    {data : "action" , name : "action"}
+                ],
+                columnDefs: [
+                    { 
+                        targets: "no-action", 
+                        searchable : false,
+                        sortable : false
+                    },
+                ]
             });
-            $(document).on('click','.deleteBtn',function(e){
+            $(document).on('click','.delete_btn',function(e){
                 e.preventDefault();
                 var id = $(this).data('id');
                 Swal.fire({
@@ -76,7 +72,20 @@
                 confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    $('#submit_form').submit();
+                  $.ajax({
+                    url : "/admin/employee/" + id,
+                    type : "DELETE",
+                    success : function(res){
+                        if(res.status == 'success'){
+                            datatable.ajax.reload();
+                            Swal.fire(
+                            'Deleted!',
+                            res.message,
+                            'success'
+                            )
+                        }
+                    }   
+                  })
                 }
                 })
             })

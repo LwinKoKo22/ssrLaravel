@@ -28,5 +28,7 @@ require __DIR__.'/auth.php';
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::get('/',[PageController::class,'index'])->name('dashboard');
     Route::resource('company',CompanyController::class);
+    Route::get('/company/datatable/ssd',[CompanyController::class,'ssd']);
     Route::resource('employee',EmployeeController::class);
+    Route::get('/employee/datatable/ssd',[EmployeeController::class,'ssd']);
 });
