@@ -19,15 +19,34 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::with('company')->orderBy('id','desc')->get();
-        return view('backend.employee.index',compact('employees'));
+        $companies = Company::all();
+        return view('backend.employee.index',compact('companies'));
     }
 
     public function ssd(){
         $data = Employee::query();
+        if(request()->name){
+            $data = $data->where('email','LIKE','%'.request()->name.'%')->orWhere('phone','LIKE','%'.request()->name.'%');
+        }
+        if(request()->date){
+            $date = explode("-",request()->date);
+            $from = $date[0];
+            $to = $date[1];
+            $data = $data->whereDate('created_at','>=',$from)->whereDate('created_at','<=',$to);
+        }
+        if(request()->company){
+            $value = request()->company;
+            $data = $data->whereHas('company',function($query) use($value){
+                $query->where('id',$value);   
+            });
+        }
+
         return datatables()->of($data)
         ->addColumn('company',function($each){
             return $each->company ? $each->company->name : "-";
+        })
+        ->addColumn('name',function($each){
+            return $each->fname ." ". $each->lname;
         })
         ->editColumn('created_at',function($each){
             return $each->created_at->format('Y-m-d');

@@ -31,4 +31,5 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::get('/company/datatable/ssd',[CompanyController::class,'ssd']);
     Route::resource('employee',EmployeeController::class);
     Route::get('/employee/datatable/ssd',[EmployeeController::class,'ssd']);
+    Route::get('/employee_export',[CompanyController::class, 'get_employee_data'])->name('company.export');
 });

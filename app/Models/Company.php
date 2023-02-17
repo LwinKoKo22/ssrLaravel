@@ -9,6 +9,7 @@ class Company extends Model
 {
     use HasFactory;
     protected $guarded=[];
+    protected $dates = ['created_at'];
     public function logo_image_path(){
         if($this->logo){
             return asset('/storage/backend/logo/'.$this->logo);

@@ -22,3 +22,11 @@ mark{
 #datatable_filter{
     display: none !important;
 }
+
+.input-group{
+position: relative;
+}
+
+#clear_btn{
+    display: none;
+}

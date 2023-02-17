@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Backend;
 
 use datatables;
+use Carbon\Carbon;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Exports\CompanyExport;
 use App\Http\Controllers\Controller;
 use App\Mail\Company as CompanyMail;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
@@ -28,9 +31,22 @@ class CompanyController extends Controller
 
     public function ssd(){
         $data = Company::query();
-        return datatables()->of($data)
+        if(request()->name){
+            $data = $data->where('name','LIKE','%'.request()->name.'%');
+        }
+        if(request()->date){
+            $date = explode("-",request()->date);
+            $from = $date[0];
+            $to = $date[1];
+            $data = $data->whereDate('created_at','>=',$from)->whereDate('created_at','<=',$to);
+        }
+        return datatables()->of($data->get())
         ->editColumn('logo',function($each){
-            return '<img src="'.$each->logo_image_path().'" width="80px" height="80px"/>';
+            if($each->logo){
+                return '<img src="'.$each->logo_image_path().'" width="80px" height="80px"/>';
+            }else{
+                return '<img src="https://via.placeholder.com/80x80" width="80px" height="80px"/>';
+            }
         })
         ->editColumn('website',function($each){
             return '<a href="'.$each->website.'" target="_blank">'.$each->website.'</a>';
@@ -47,6 +63,7 @@ class CompanyController extends Controller
         ->rawColumns(['logo','website','action'])
         ->toJson();
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -144,5 +161,9 @@ class CompanyController extends Controller
             'status'=>'success',
             'message'=>'Successfully deleted'
         ]);
+    }
+
+    public function get_employee_data(){
+        return Excel::download(new CompanyExport, 'company.xlsx');
     }
 }

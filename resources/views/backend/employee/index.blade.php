@@ -6,6 +6,35 @@
         @include('backend.layouts.content-header')
         <!-- /.content-header -->
          <!-- Main content -->
+         <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" id="search_btn">Search</button>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group mb-3">
+                        <i class="fa-solid fa-x" id="clear_btn" style="position: absolute;top: 12px;right: 8px;z-index: 999;cursor: pointer;"></i>
+                        <input type="text" class="form-control" placeholder="Search here...."   id="search" style="border-radius: 5px">
+                      </div>
+                </div>
+                <div class="col-3">
+                        <select id="company" class="form-control">
+                            <option value="">All</option>
+                            @foreach ($companies as $company)
+                                <option value="{{ $company->id }}">{{ $company->name }}</option>
+                            @endforeach
+                        </select>
+                </div>
+                <div class="col-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Date</span>
+                        <input type="text" name="date" value="{{request()->date}}"  class="form-control date" placeholder="All"/>
+                    </div>
+                </div>
+            </div>
+        </div>
     <section class="content company">
         <div class="container-fluid">
             <div class="card">
@@ -19,8 +48,7 @@
                     <table id="datatable" class="table table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Name</th>
                                 <th>Company</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -44,8 +72,7 @@
                 serverSide: true,
                 ajax: '/admin/employee/datatable/ssd',
                 columns : [
-                    {data :"fname" , name : "fname"},
-                    {data :"lname" , name : "lname"},
+                    {data :"name" , name : "name"},
                     {data :"company" , name : "company"},
                     {data : "email" , name : "email"},
                     {data : "phone" , name : "phone"},
@@ -89,6 +116,36 @@
                 }
                 })
             })
+             //Search Button
+             $('#search_btn').on('click',function(){
+                var search = $('#search').val();
+                var date = $('.date').val();
+                var company = $('#company').val();
+                if(search){
+                    document.getElementById('clear_btn').style.display = 'block';
+                }
+                datatable.ajax.url(`/admin/employee/datatable/ssd?name=${search}&date=${date}&company=${company}`).load();
+            })
+            //Clear Button
+            $('#clear_btn').on('click',function(){
+                window.location.replace('/admin/employee');
+                return false;
+            })
+                //DaterangePicker
+                $('.date').daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            });
+
+            $('.date').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+            });
+
+            $('.date').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
         });
     </script>
 @endsection
