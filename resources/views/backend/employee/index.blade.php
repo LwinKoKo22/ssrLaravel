@@ -40,6 +40,7 @@
             <div class="card">
                 <div class="card-header">
                     <span>Employees</h3>
+                        <a href="#" id="export" class="btn btn-primary">Export</a>
                     <div class="float-right">
                         <a href="{{ route('admin.employee.create') }}" class="btn btn-success "><i class="fa-solid fa-circle-plus"></i> Add new employee</a>
                     </div>
@@ -125,6 +126,13 @@
                     document.getElementById('clear_btn').style.display = 'block';
                 }
                 datatable.ajax.url(`/admin/employee/datatable/ssd?name=${search}&date=${date}&company=${company}`).load();
+            })
+            $('#export').on('click',function(e){
+                e.preventDefault();
+                var search = $('#search').val();
+                var date = $('.date').val();
+                var company = $('#company').val();
+                window.location.replace(`/admin/employee_export?search=${search}&date=${date}&company=${company}`);
             })
             //Clear Button
             $('#clear_btn').on('click',function(){

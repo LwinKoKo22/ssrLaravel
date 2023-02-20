@@ -6,7 +6,9 @@ use datatables;
 use App\Models\Company;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Exports\EmployeeExport;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 
@@ -143,5 +145,12 @@ class EmployeeController extends Controller
             'status'=>'success',
             'message'=>'Successfully deleted'
         ]);
+    }
+
+    public function get_employee_data(){
+        $search = request()->search;
+        $date = request()->date;
+        $company = request()->company;
+        return Excel::download(new EmployeeExport($search,$date,$company),'employee.xlsx');
     }
 }

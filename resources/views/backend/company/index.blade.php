@@ -32,7 +32,7 @@
             <div class="card">
                 <div class="card-header">
                     <span>Companies</h3>
-                        <a href="{{ route('admin.company.export') }}" class="btn btn-primary">Export</a>
+                        <a href="#" class="btn btn-primary" id="export">Export</a>
                     <div class="float-right">
                         <a href="{{ route('admin.company.create') }}" class="btn btn-success "><i class="fa-solid fa-circle-plus"></i> Add new company</a>
                     </div>
@@ -119,6 +119,14 @@
                 }
                 datatable.ajax.url(`/admin/company/datatable/ssd?name=${search}&date=${date}`).load();
             })
+
+            $('#export').on('click',function(e){
+                e.preventDefault();
+                var search = $('#search').val();
+                var date = $('.date').val();
+                window.location.replace(`/admin/company_export?search=${search}&date=${date}`);
+            })
+
             //Clear Button
             $('#clear_btn').on('click',function(){
                 window.location.replace('/admin/company');

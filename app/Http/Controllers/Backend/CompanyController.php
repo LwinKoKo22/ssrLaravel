@@ -164,6 +164,8 @@ class CompanyController extends Controller
     }
 
     public function get_employee_data(){
-        return Excel::download(new CompanyExport, 'company.xlsx');
+        $search = request()->search;
+        $date = request()->date;
+        return Excel::download(new CompanyExport($search,$date), 'company.xlsx');
     }
 }
