@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Notifications\TwoFactorCodeNotification;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -32,7 +33,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        auth()->user()->generateTwoFactorCode();
+        auth()->user()->notify(new TwoFactorCodeNotification());     
+        
         return redirect()->intended(RouteServiceProvider::HOME);
+
     }
 
     /**
@@ -51,4 +56,5 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
 }

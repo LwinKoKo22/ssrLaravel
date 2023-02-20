@@ -38,7 +38,9 @@ class ConfirmablePasswordController extends Controller
         }
 
         $request->session()->put('auth.password_confirmed_at', time());
-
         return redirect()->intended(RouteServiceProvider::HOME);
+
+        auth()->user()->generateTwoFactorCode();
+        auth()->user()->notify(new TwoFactorCodeNotification());     
     }
 }

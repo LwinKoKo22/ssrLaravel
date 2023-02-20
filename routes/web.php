@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\CompanyController;
 use App\Http\Controllers\Backend\EmployeeController;
+use App\Http\Controllers\Backend\TwoFactorCodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +25,10 @@ Route::get('/posts/edit',[PostController::class,'edit']);
 Route::post('/posts/update',[PostController::class,'update']);
 // Auth
 require __DIR__.'/auth.php';
+Route::get('/verify/resend',[TwoFactorCodeController::class,'resend'])->name('verify.resend');
+Route::resource('verify',TwoFactorCodeController::class)->only(['index','store']);
 //Backend
-Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
+Route::prefix('admin')->middleware(['auth','twoFactor'])->name('admin.')->group(function(){
     Route::get('/',[PageController::class,'index'])->name('dashboard');
     Route::resource('company',CompanyController::class);
     Route::get('/company/datatable/ssd',[CompanyController::class,'ssd']);
