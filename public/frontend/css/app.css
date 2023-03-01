@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap');
+
+*{
+left: 0px;
+right: 0px;
+box-sizing: border-box;
+}
+
+body{
+    background-color: rgba(81, 80, 80, 0.361);
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+.card{
+    border: none;
+    border-radius: 5px !important;
+}
+
+::placeholder{
+color: rgba(68, 67, 67, 0.347) !important;
+}
+
+h5{
+    color: rgba(68, 67, 67, 0.872) ;
+}
+
+label{
+margin-bottom: 8px !important;
+color: rgb(81, 80, 80) !important;
+font-size: 14px !important;
+}
+
+input[type="text"],input[type="email"],input[type="number"],input[type="password"]{
+    border-radius: 0px !important;
+    padding: 11px 20px !important;
+    border: 1px solid rgba(68, 67, 67, 0.1) !important;
+    background-color: rgba(33, 37, 41, 0.123) !important;
+}
+
+input:focus{
+box-shadow: none !important;
+outline: none !important;
+border: 1px solid rgba(68, 67, 67, 0.347) !important;
+}
+
+
+.form-control{
+    font-size: 14px !important;
+}
+
+.btn-theme{
+    padding:8px 10px;
+    background-color: rgb(41, 27, 71);
+    border-radius: 0px;
+    color: white;
+    font-size: 14px !important;
+    /* font-weight: bold; */
+}
+
+.btn-theme:hover{
+    background-color: rgba(41, 27, 71, 0.842);
+    color: white;
+}
+
+.text{
+    font-size: 13px;
+    color: rgba(68, 67, 67, 0.347);
+}
+
+.text-danger{
+    font-size: 14px !important;
+}
+
+.webcan-container{
+    position: relative;
+}
+
+#camera{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: 0px auto;
+    
+}
+
+#results img{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 331px !important;
+    height:auto !important;
+    z-index: 99;
+}
+
+
+#click_btn{
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(48, 48, 48, 0.507);
+    color: white;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.112);
+    /* margin: 0 auto; */
+}
+
+#webcan_container #results{
+    width: 330px;
+    height: 249px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    margin: 0 auto;
+}

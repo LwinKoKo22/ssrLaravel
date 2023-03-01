@@ -76,6 +76,16 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="{{ route('admin.feature.index') }}" class="nav-link @yield('feature-active')">
+              <i class="nav-icon fa-solid fa-paperclip"></i>
+              <p>
+                Feature
+              </p>
+            </a>
+          </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
