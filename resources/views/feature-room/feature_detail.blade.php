@@ -41,14 +41,9 @@
 <script>
 function frontCamera(){
     Webcam.set({
-   width: 320,
-   height: 250,
    image_format: 'jpeg',
    jpeg_quality: 90,
-   constraints: {
-    video : true,
-   facingMode: 'environment'
-   }
+   audio: true, video: { facingMode: { exact: "environment" } }
 });
 Webcam.attach( '#camera' );
 }
@@ -94,9 +89,14 @@ function canvasContainer(){
 function back_camera(){
     document.getElementById('results').innerHTML = "";
     Webcam.set({
+   width: 320,
+   height: 250,
    image_format: 'jpeg',
    jpeg_quality: 90,
-   audio: true, video: { facingMode: { exact: "environment" } }
+   constraints: {
+    video : true,
+   facingMode: 'environment'
+   }
 });
 Webcam.attach( '#camera' );
 document.getElementById('click_btn').style.display = "block";
