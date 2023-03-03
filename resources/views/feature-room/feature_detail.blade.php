@@ -17,8 +17,9 @@
         </div>
         <div class="row">
             <div class="col-12 text-center">
+                <button onclick="start_camera()"id="start_camera" class="mt-2"><i class="bi bi-camera-fill"></i></button>
                 <button onclick="take_snapshot()" id="click_btn" class="mt-2"><i class="bi bi-camera"></i></button>
-                <button onclick="back_camera()" id="rotate_btn"><i class="bi bi-arrow-clockwise"></i></button>
+                <button onclick=" back_camera()" id="rotate_btn"><i class="bi bi-arrow-clockwise"></i></button>
             </div>
         </div>
     </div>
@@ -38,20 +39,37 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js" ></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
-Webcam.set({
+ frontCamera();
+function frontCamera(){
+    Webcam.set({
+   width: 320,
+   height: 250,
    image_format: 'jpeg',
    jpeg_quality: 90,
+   constraints: {
+    video : true,
+   facingMode: 'environment'
+   }
 });
 Webcam.attach( '#camera' );
+}
 
 function take_snapshot(){
     Webcam.snap( function(data_uri) {
     document.getElementById('results').innerHTML = 
      '<img src="'+data_uri+'" class="responsive"/>';
-    //  document.getElementById('click_btn').style.display = "none";
+     document.getElementById('click_btn').style.display = "none";
+     document.getElementById('start_camera').style.display = "block";
      canvasContainer();
 } );
-// Webcam.reset();
+Webcam.reset();
+}
+
+function start_camera(){
+frontCamera();
+document.getElementById('results').innerHTML = "";
+document.getElementById('click_btn').style.display = "block";
+document.getElementById('start_camera').style.display = "none";
 }
 
 let upload_file = document.getElementById('upload_file');
@@ -74,9 +92,11 @@ function canvasContainer(){
     document.querySelector('.download').download = " ";
 });
 }
-
 function back_camera(){
+    Webcam.reset();
     Webcam.set({
+    width: 320,
+   height: 250,
    image_format: 'jpeg',
    jpeg_quality: 90,
    audio: true, video: { facingMode: { exact: "environment" } }
