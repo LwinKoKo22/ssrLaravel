@@ -20,7 +20,7 @@
   <body>
 <div class="container">
     <div class="d-flex justify-content-center align-items-center">
-        <div class="col-lg-6 col-12">
+        <div class="col-xl-6 col-12">
            @yield('content')
         </div>
     </div>

@@ -38,21 +38,16 @@
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
 Webcam.set({
-   width: 332,
-   height: 250,
    image_format: 'jpeg',
    jpeg_quality: 90,
-   constraints: {
-    video : true,
-   facingMode: 'environment'
-   }
+   audio: true, video: { facingMode: { exact: "environment" } }
 });
 Webcam.attach( '#camera' );
 
 function take_snapshot(){
     Webcam.snap( function(data_uri) {
     document.getElementById('results').innerHTML = 
-     '<img src="'+data_uri+'" />';
+     '<img src="'+data_uri+'" class="responsive"/>';
     //  document.getElementById('click_btn').style.display = "none";
      canvasContainer();
 } );
@@ -67,7 +62,7 @@ upload_file.addEventListener("change",e=>{
        let data = reader.result;
        document.getElementById('results').innerHTML = 
      '<img src="'+data+'" />';
-    //  document.getElementById('click_btn').style.display = "none";
+     document.getElementById('click_btn').style.display = "none";
      Webcam.reset();
      canvasContainer();
     })

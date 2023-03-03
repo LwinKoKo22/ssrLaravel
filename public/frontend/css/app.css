@@ -81,7 +81,9 @@ border: 1px solid rgba(68, 67, 67, 0.347) !important;
     left: 0px;
     right: 0px;
     bottom: 0px;
-    margin: 0px auto;
+    width: 310px;
+    height: 250px;
+    margin: -8px auto;
     
 }
 
@@ -90,7 +92,7 @@ border: 1px solid rgba(68, 67, 67, 0.347) !important;
     left: 0px;
     right: 0px;
     bottom: 0px;
-    width: 331px !important;
+    width: 100% !important;
     height:auto !important;
     z-index: 99;
 }
@@ -108,8 +110,8 @@ border: 1px solid rgba(68, 67, 67, 0.347) !important;
 }
 
 #webcan_container #results{
-    width: 330px;
-    height: 249px;
+    width: 310px;
+    height: 223x;
     left: 0;
     right: 0;
     bottom: 0;
