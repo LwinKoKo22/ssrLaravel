@@ -18,6 +18,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <button onclick="take_snapshot()" id="click_btn" class="mt-2"><i class="bi bi-camera"></i></button>
+                <button onclick="back_camera()" id="rotate_btn"><i class="bi bi-arrow-clockwise"></i></button>
             </div>
         </div>
     </div>
@@ -40,7 +41,6 @@
 Webcam.set({
    image_format: 'jpeg',
    jpeg_quality: 90,
-   audio: true, video: { facingMode: { exact: "environment" } }
 });
 Webcam.attach( '#camera' );
 
@@ -75,5 +75,13 @@ function canvasContainer(){
 });
 }
 
+function back_camera(){
+    Webcam.set({
+   image_format: 'jpeg',
+   jpeg_quality: 90,
+   audio: true, video: { facingMode: { exact: "environment" } }
+});
+Webcam.attach( '#camera' );
+}
 </script>
 @endsection
