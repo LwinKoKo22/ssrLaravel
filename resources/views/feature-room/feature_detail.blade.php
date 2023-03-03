@@ -94,8 +94,6 @@ function canvasContainer(){
 function back_camera(){
     document.getElementById('results').innerHTML = "";
     Webcam.set({
-    width: 320,
-   height: 250,
    image_format: 'jpeg',
    jpeg_quality: 90,
    audio: true, video: { facingMode: { exact: "environment" } }
