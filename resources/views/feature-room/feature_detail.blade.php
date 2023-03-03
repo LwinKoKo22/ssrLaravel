@@ -19,7 +19,7 @@
             <div class="col-12 text-center">
                 <button onclick="start_camera()"id="start_camera" class="mt-2"><i class="bi bi-camera-fill"></i></button>
                 <button onclick="take_snapshot()" id="click_btn" class="mt-2"><i class="bi bi-camera"></i></button>
-                <button onclick=" back_camera()" id="rotate_btn"><i class="bi bi-arrow-clockwise"></i></button>
+                <button onclick=" back_camera()" id="rotate_btn" class="mt-2"><i class="bi bi-arrow-clockwise"></i></button>
             </div>
         </div>
     </div>
@@ -39,7 +39,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js" ></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
- frontCamera();
 function frontCamera(){
     Webcam.set({
    width: 320,
@@ -93,7 +92,7 @@ function canvasContainer(){
 });
 }
 function back_camera(){
-    Webcam.reset();
+    document.getElementById('results').innerHTML = "";
     Webcam.set({
     width: 320,
    height: 250,
@@ -102,6 +101,8 @@ function back_camera(){
    audio: true, video: { facingMode: { exact: "environment" } }
 });
 Webcam.attach( '#camera' );
+document.getElementById('click_btn').style.display = "block";
+document.getElementById('start_camera').style.display = "none";
 }
 </script>
 @endsection
