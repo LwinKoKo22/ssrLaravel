@@ -42,7 +42,10 @@ Webcam.set({
    height: 250,
    image_format: 'jpeg',
    jpeg_quality: 90,
-
+   constraints: {
+    video : true,
+   facingMode: 'environment'
+   }
 });
 Webcam.attach( '#camera' );
 
