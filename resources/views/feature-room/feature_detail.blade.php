@@ -18,8 +18,9 @@
         <div class="row">
             <div class="col-12 text-center">
                 <button onclick="start_camera()"id="start_camera" class="mt-2"><i class="bi bi-camera-fill"></i></button>
-                <button onclick="take_snapshot()" id="click_btn" class="mt-2"><i class="bi bi-camera"></i></button>
-                <button onclick=" back_camera()" id="rotate_btn" class="mt-2"><i class="bi bi-arrow-clockwise"></i></button>
+                <button onclick="take_snapshot()" id="click_btn" class="mt-2" style="display: none;"><i class="bi bi-camera"></i></button>
+                <button onclick="back_camera()" id="rotate_btn" class="mt-2"><i class="bi bi-arrow-clockwise"></i></button>
+                <button onclick="front_camera()" id="rotate_btn_two" class="mt-2" ><i class="bi bi-arrow-counterclockwise"></i></button>
             </div>
         </div>
     </div>
@@ -98,6 +99,14 @@ function back_camera(){
    facingMode: 'environment'
    }
 });
+Webcam.attach( '#camera' );
+document.getElementById('click_btn').style.display = "block";
+document.getElementById('start_camera').style.display = "none";
+}
+
+function front_camera(){
+document.getElementById('results').innerHTML = "";
+frontCamera()
 Webcam.attach( '#camera' );
 document.getElementById('click_btn').style.display = "block";
 document.getElementById('start_camera').style.display = "none";
