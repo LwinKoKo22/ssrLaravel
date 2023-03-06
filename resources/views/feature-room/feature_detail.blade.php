@@ -20,6 +20,8 @@
                 <div class="">
                     <div class="d-flex justify-content-center">
                         <button id="start_camera" class="mt-2 me-2"><i class="bi bi-camera-fill"></i></button>
+                        <button id="reverse_camera" class="mt-2 me-2" style="display:none;"><i class="bi bi-camera2"></i></button>
+                        <button id="reverse_click" class="mt-2 me-2" style="display:none;"><i class="bi bi-camera-fill"></i></button>
                         <button  id="click_btn" class="mt-2 me-2" style="display: none;"><i class="bi bi-camera"></i></button>
                         <button  id="front_camera" class="mt-2 me-2"><i class="bi bi-arrow-clockwise"></i></button>
                         <button  id="reverse_btn" class="mt-2" style="display: none;"><i class="bi bi-arrow-counterclockwise"></i></button>
@@ -51,9 +53,10 @@ let start = document.getElementById('start_camera');
 let click = document.getElementById('click_btn');
 let front = document.getElementById('front_camera');
 let reverse = document.getElementById('reverse_btn');
+let reverse_camera = document.getElementById('reverse_camera');
+let reverse_click  = document.getElementById('reverse_click');
 //To start the task
-start.addEventListener('click',function(){
-    result.innerHTML = "  ";
+function startCamera(){
     Webcam.set({
    width: 320,
    height: 250,
@@ -64,6 +67,11 @@ start.addEventListener('click',function(){
    }
 });
     Webcam.attach('camera');
+}
+
+start.addEventListener('click',function(){
+    result.innerHTML = "  ";
+    startCamera();
     start.style.display = "none";
     click.style.display = "block";
 })
@@ -73,8 +81,6 @@ function snapShoot(){
     Webcam.snap( function(data_uri) {
     document.getElementById('results').innerHTML = 
      '<img src="'+data_uri+'" class="responsive"/>';
-     document.getElementById('click_btn').style.display = "none";
-     document.getElementById('start_camera').style.display = "block";
      canvasContainer();
 } );
 Webcam.reset();
@@ -83,6 +89,8 @@ Webcam.reset();
 //Capture Photo
 click.addEventListener('click',function(){
     snapShoot();
+    document.getElementById('click_btn').style.display = "none";
+     document.getElementById('start_camera').style.display = "block";
 })
 
 // function startCamera(){
@@ -114,24 +122,42 @@ front.addEventListener('click',function(){
     });
     Webcam.attach( 'camera' );
     start.style.display = "none";
-    click.style.display = "block";
+    click.style.display = "none";
     front.style.display = "none";
     reverse.style.display = "block";
+    reverse_camera.style.display = "block"
 })
 
+reverse_camera.addEventListener('click',function(){
+    snapShoot();
+    document.getElementById('click_btn').style.display = "none";
+    document.getElementById('start_camera').style.display = "none";
+    document.getElementById('reverse_camera').style.display = "none";
+    document.getElementById('reverse_click').style.display = "block";
+})
+
+reverse_click.addEventListener('click',function(){
+    result.innerHTML = "  ";
+    Webcam.set({
+        width: 320,
+        height: 250,
+        image_format: 'jpeg',
+        constraints: {
+            facingMode: 'environment'
+        }
+    });
+    Webcam.attach( 'camera' );
+    start.style.display = "none";
+    click.style.display = "none";
+    front.style.display = "none";
+    reverse.style.display = "block";
+    reverse_camera.style.display = "block"
+    reverse_click.style.display = "none";
+})
 //reverse btn
 reverse.addEventListener('click',function(){
     result.innerHTML = "  ";
-    Webcam.set({
-   width: 320,
-   height: 250,
-   image_format: 'jpeg',
-   jpeg_quality: 90,
-   constraints: {
-    video : true,
-   }
-});
-    Webcam.attach('camera');
+    startCamera();
     start.style.display = "none";
     click.style.display = "block";
     front.style.display = "block";
