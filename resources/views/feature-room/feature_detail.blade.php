@@ -22,9 +22,9 @@
                         <button id="start_camera" class="mt-2 me-2"><i class="bi bi-camera-fill"></i></button>
                         <button  id="click_btn" class="mt-2 me-2" style="display: none;"><i class="bi bi-camera"></i></button>
                         <button  id="front_camera" class="mt-2 me-2"><i class="bi bi-arrow-clockwise"></i></button>
+                        <button  id="reverse_btn" class="mt-2" style="display: none;"><i class="bi bi-arrow-counterclockwise"></i></button>
                     </div>
                 </div>
-                {{-- <button onclick="start_camera()" id="reverse_btn" class="mt-2" style="display: none;"><i class="bi bi-arrow-counterclockwise"></i></button> --}}
             </div>
         </div>
     </div>
@@ -50,6 +50,7 @@ let result = document.getElementById('results');
 let start = document.getElementById('start_camera');
 let click = document.getElementById('click_btn');
 let front = document.getElementById('front_camera');
+let reverse = document.getElementById('reverse_btn');
 //To start the task
 start.addEventListener('click',function(){
     result.innerHTML = "  ";
@@ -114,6 +115,27 @@ front.addEventListener('click',function(){
     Webcam.attach( 'camera' );
     start.style.display = "none";
     click.style.display = "block";
+    front.style.display = "none";
+    reverse.style.display = "block";
+})
+
+//reverse btn
+reverse.addEventListener('click',function(){
+    result.innerHTML = "  ";
+    Webcam.set({
+   width: 320,
+   height: 250,
+   image_format: 'jpeg',
+   jpeg_quality: 90,
+   constraints: {
+    video : true,
+   }
+});
+    Webcam.attach('camera');
+    start.style.display = "none";
+    click.style.display = "block";
+    front.style.display = "block";
+    reverse.style.display = "none";
 })
 
 //File upload
