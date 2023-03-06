@@ -155,11 +155,5 @@ border: 1px solid rgba(68, 67, 67, 0.347) !important;
 }
 
 #webcan_container #results{
-    display: inline-table;
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    margin: 0px auto;
     z-index: 999;
 }
