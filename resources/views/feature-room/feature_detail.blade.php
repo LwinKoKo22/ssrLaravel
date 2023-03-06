@@ -16,7 +16,7 @@
            </div>
         </div>
         <div class="row">
-            <div class="col-12 ">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="">
                     <div class="d-flex justify-content-center">
                         <button id="start_camera" class="mt-2 me-2"><i class="bi bi-camera-fill"></i></button>
@@ -59,7 +59,6 @@ let reverse_click  = document.getElementById('reverse_click');
 function startCamera(){
     Webcam.set({
    width: 320,
-   height: 250,
    image_format: 'jpeg',
    jpeg_quality: 90,
    constraints: {
@@ -72,7 +71,6 @@ function startCamera(){
 function frontCamera(){
     Webcam.set({
         width: 320,
-        height: 250,
         image_format: 'jpeg',
         constraints: {
             facingMode: 'environment'
