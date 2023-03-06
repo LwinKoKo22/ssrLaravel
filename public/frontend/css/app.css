@@ -89,12 +89,7 @@ border: 1px solid rgba(68, 67, 67, 0.347) !important;
 
 #results img{
     position: absolute;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    width: 320px !important;
-    height:240px !important;
-    z-index: 99;
+    width: 100%;
 }
 
 
@@ -161,11 +156,12 @@ border: 1px solid rgba(68, 67, 67, 0.347) !important;
 }
 
 #webcan_container #results{
-    width: 320px;
-    height: 223x;
-    left: 0;
-    right: 0;
-    bottom: 0;
     position: absolute;
-    margin: 0 auto;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 310px;
+    height: 250px;
+    margin: 0px auto;
+    z-index: 999;
 }
