@@ -20,7 +20,7 @@
                 <button onclick="start_camera()"id="start_camera" class="mt-2"><i class="bi bi-camera-fill"></i></button>
                 <button onclick="take_snapshot()" id="click_btn" class="mt-2" style="display: none;"><i class="bi bi-camera"></i></button>
                 <button onclick="back_camera()" id="rotate_btn" class="mt-2"><i class="bi bi-arrow-clockwise"></i></button>
-                <button onclick="front_camera()" id="rotate_btn_two" class="mt-2" ><i class="bi bi-arrow-counterclockwise"></i></button>
+                <button onclick="reverse_camera()" id="reverse_btn" class="mt-2" style="display: none;"><i class="bi bi-arrow-counterclockwise"></i></button>
             </div>
         </div>
     </div>
@@ -40,6 +40,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js" ></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
+
+//Front Camera 
 function frontCamera(){
     Webcam.set({
    image_format: 'jpeg',
@@ -49,6 +51,7 @@ function frontCamera(){
 Webcam.attach( '#camera' );
 }
 
+//Capture Photo
 function take_snapshot(){
     Webcam.snap( function(data_uri) {
     document.getElementById('results').innerHTML = 
@@ -60,6 +63,7 @@ function take_snapshot(){
 Webcam.reset();
 }
 
+//To start the task
 function start_camera(){
 frontCamera();
 document.getElementById('results').innerHTML = "";
@@ -67,6 +71,7 @@ document.getElementById('click_btn').style.display = "block";
 document.getElementById('start_camera').style.display = "none";
 }
 
+//File upload
 let upload_file = document.getElementById('upload_file');
 upload_file.addEventListener("change",e=>{
     const file = upload_file.files[0];
@@ -81,12 +86,16 @@ upload_file.addEventListener("change",e=>{
     })
      reader.readAsDataURL(file);
 })
+
+//download photo 
 function canvasContainer(){
     html2canvas(document.querySelector("#webcan_container")).then(canvas => {
     document.querySelector('.download').href = canvas.toDataURL();
     document.querySelector('.download').download = " ";
 });
 }
+
+//Back Camera
 function back_camera(){
     document.getElementById('results').innerHTML = "";
     Webcam.set({
@@ -102,14 +111,15 @@ function back_camera(){
 Webcam.attach( '#camera' );
 document.getElementById('click_btn').style.display = "block";
 document.getElementById('start_camera').style.display = "none";
+document.getElementById('reverse_btn').style.display = 'block';
+document.getElementById('rotate_btn').style.display = "none";
 }
 
-function front_camera(){
-document.getElementById('results').innerHTML = "";
-frontCamera()
-Webcam.attach( '#camera' );
-document.getElementById('click_btn').style.display = "block";
-document.getElementById('start_camera').style.display = "none";
+//reverse button
+function reverse_camera(){
+    start_camera();
+    document.getElementById('reverse_btn').style.display = "none";
+    document.getElementById('rotate_btn').style.display = "block";
 }
 </script>
 @endsection
