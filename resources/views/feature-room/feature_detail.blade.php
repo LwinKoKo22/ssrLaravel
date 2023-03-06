@@ -69,6 +69,18 @@ function startCamera(){
     Webcam.attach('camera');
 }
 
+function frontCamera(){
+    Webcam.set({
+        width: 320,
+        height: 250,
+        image_format: 'jpeg',
+        constraints: {
+            facingMode: 'environment'
+        }
+    });
+    Webcam.attach( 'camera' );
+}
+
 start.addEventListener('click',function(){
     result.innerHTML = "  ";
     startCamera();
@@ -97,15 +109,7 @@ click.addEventListener('click',function(){
 //Front Camera 
 front.addEventListener('click',function(){
     result.innerHTML = "  ";
-    Webcam.set({
-        width: 320,
-        height: 250,
-        image_format: 'jpeg',
-        constraints: {
-            facingMode: 'environment'
-        }
-    });
-    Webcam.attach( 'camera' );
+    frontCamera();
     start.style.display = "none";
     click.style.display = "none";
     front.style.display = "none";
@@ -123,14 +127,7 @@ reverse_camera.addEventListener('click',function(){
 
 reverse_click.addEventListener('click',function(){
     result.innerHTML = "  ";
-    Webcam.set({
-        width: 320,
-        height: 250,
-        image_format: 'jpeg',
-        constraints: {
-            facingMode: 'environment'
-        }
-    });
+   frontCamera();
     Webcam.attach( 'camera' );
     start.style.display = "none";
     click.style.display = "none";
