@@ -152,7 +152,7 @@ border: 1px solid rgba(68, 67, 67, 0.347) !important;
 
 #results img{
     width: 220px !important;
-    position: fixed;
+    position: absolute;
     left: 0px;
     right: 0px;
     bottom: 0px;
