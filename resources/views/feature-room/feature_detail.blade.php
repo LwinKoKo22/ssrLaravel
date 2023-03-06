@@ -91,23 +91,8 @@ click.addEventListener('click',function(){
     snapShoot();
     document.getElementById('click_btn').style.display = "none";
      document.getElementById('start_camera').style.display = "block";
+     reverse_click.style.display = "none";
 })
-
-// function startCamera(){
-//     Webcam.set({
-//    width: 320,
-//    height: 250,
-//    image_format: 'jpeg',
-//    jpeg_quality: 90,
-//    constraints: {
-//     video : true,
-//    }
-// });
-// Webcam.attach( '#camera' );
-// document.getElementById('results').innerHTML = "";
-// document.getElementById('click_btn').style.display = "block";
-// document.getElementById('start_camera').style.display = "none";
-// }
 
 //Front Camera 
 front.addEventListener('click',function(){
@@ -162,6 +147,8 @@ reverse.addEventListener('click',function(){
     click.style.display = "block";
     front.style.display = "block";
     reverse.style.display = "none";
+    reverse_camera.style.display = "none";
+    reverse_click.style.display = "none";
 })
 
 //File upload
@@ -187,24 +174,5 @@ function canvasContainer(){
 });
 }
 
-//Back Camera
-// function back_camera(){
-//     document.getElementById('results').innerHTML = "";
-//     frontCamera()
-// Webcam.attach( '#camera' );
-// document.getElementById('click_btn').style.display = "block";
-// document.getElementById('start_camera').style.display = "none";
-// document.getElementById('rotate_btn').style.display = "none";
-// }
-
-//reverse button
-// function reverse_camera(){
-// frontCamera();
-// document.getElementById('results').innerHTML = "";
-// document.getElementById('click_btn').style.display = "block";
-// document.getElementById('start_camera').style.display = "none";
-// document.getElementById('reverse_btn').style.display = 'none';
-// document.getElementById('rotate_btn').style.display = "block";
-// }
 </script>
 @endsection
