@@ -117,6 +117,7 @@ document.getElementById('rotate_btn').style.display = "none";
 
 //reverse button
 function reverse_camera(){
+    document.getElementById('results').innerHTML = "";
     Webcam.set({
    image_format: 'jpeg',
    jpeg_quality: 90,
