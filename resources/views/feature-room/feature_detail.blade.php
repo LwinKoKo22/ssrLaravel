@@ -90,7 +90,7 @@ start.addEventListener('click',function(){
 function snapShoot(){
     Webcam.snap( function(data_uri) {
     document.getElementById('results').innerHTML = 
-     '<img src="'+data_uri+'" />';
+     '<img src="'+data_uri+'" style="width:220px;position:absolute;left:0px;right:0px;bottom:0px;margin:0 auto;z-index:99"/>';
      canvasContainer();
 } );
 Webcam.reset();
@@ -153,7 +153,7 @@ upload_file.addEventListener("change",e=>{
     const reader = new FileReader();
     reader.addEventListener('load',()=>{
         let data = reader.result;
-        result.innerHTML ='<img src="'+data+'"/>';
+        result.innerHTML ='<img src="'+data+'" style="width:220px;position:absolute;left:0px;right:0px;bottom:0px;margin:0 auto;z-index:99"/>';
         click.style.display = "none";
         Webcam.reset();
         canvasContainer();
