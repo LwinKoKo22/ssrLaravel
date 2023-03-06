@@ -20,7 +20,7 @@
                 <button onclick="start_camera()"id="start_camera" class="mt-2"><i class="bi bi-camera-fill"></i></button>
                 <button onclick="take_snapshot()" id="click_btn" class="mt-2" style="display: none;"><i class="bi bi-camera"></i></button>
                 <button onclick="back_camera()" id="rotate_btn" class="mt-2"><i class="bi bi-arrow-clockwise"></i></button>
-                <button onclick="reverse_camera()" id="reverse_btn" class="mt-2" style="display: none;"><i class="bi bi-arrow-counterclockwise"></i></button>
+                {{-- <button onclick="start_camera()" id="reverse_btn" class="mt-2" style="display: none;"><i class="bi bi-arrow-counterclockwise"></i></button> --}}
             </div>
         </div>
     </div>
@@ -65,10 +65,22 @@ Webcam.reset();
 
 //To start the task
 function start_camera(){
-frontCamera();
+    Webcam.set({
+   width: 320,
+   height: 250,
+   image_format: 'jpeg',
+   jpeg_quality: 90,
+   constraints: {
+    video : true,
+   facingMode: 'environment'
+   }
+});
+Webcam.attach( '#camera' );
 document.getElementById('results').innerHTML = "";
 document.getElementById('click_btn').style.display = "block";
 document.getElementById('start_camera').style.display = "none";
+// document.getElementById('reverse_btn').style.display = 'block';
+document.getElementById('rotate_btn').style.display = "block";
 }
 
 //File upload
@@ -97,32 +109,21 @@ function canvasContainer(){
 
 //Back Camera
 function back_camera(){
-    document.getElementById('results').innerHTML = "";
-    Webcam.set({
-   width: 320,
-   height: 250,
-   image_format: 'jpeg',
-   jpeg_quality: 90,
-   constraints: {
-    video : true,
-   facingMode: 'environment'
-   }
-});
-Webcam.attach( '#camera' );
+document.getElementById('results').innerHTML = "";
+frontCamera();
 document.getElementById('click_btn').style.display = "block";
 document.getElementById('start_camera').style.display = "none";
-document.getElementById('reverse_btn').style.display = 'block';
 document.getElementById('rotate_btn').style.display = "none";
 }
 
 //reverse button
-function reverse_camera(){
-frontCamera();
-document.getElementById('results').innerHTML = "";
-document.getElementById('click_btn').style.display = "block";
-document.getElementById('start_camera').style.display = "none";
-document.getElementById('reverse_btn').style.display = 'none';
-document.getElementById('rotate_btn').style.display = "block";
-}
+// function reverse_camera(){
+// frontCamera();
+// document.getElementById('results').innerHTML = "";
+// document.getElementById('click_btn').style.display = "block";
+// document.getElementById('start_camera').style.display = "none";
+// document.getElementById('reverse_btn').style.display = 'none';
+// document.getElementById('rotate_btn').style.display = "block";
+// }
 </script>
 @endsection
