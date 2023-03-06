@@ -117,13 +117,8 @@ document.getElementById('rotate_btn').style.display = "none";
 
 //reverse button
 function reverse_camera(){
-    document.getElementById('results').innerHTML = "";
-    Webcam.set({
-   image_format: 'jpeg',
-   jpeg_quality: 90,
-   audio: true, video: { facingMode: { exact: "environment" } }
-});
-Webcam.attach( '#camera' );
+frontCamera();
+document.getElementById('results').innerHTML = "";
 document.getElementById('click_btn').style.display = "block";
 document.getElementById('start_camera').style.display = "none";
 document.getElementById('reverse_btn').style.display = 'none';
