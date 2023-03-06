@@ -54,10 +54,14 @@ let front = document.getElementById('front_camera');
 start.addEventListener('click',function(){
     result.innerHTML = "  ";
     Webcam.set({
-        width: 320,
-        height: 250,
-        image_format: 'jpeg',
-    })
+   width: 320,
+   height: 250,
+   image_format: 'jpeg',
+   jpeg_quality: 90,
+   constraints: {
+    video : true,
+   }
+});
     Webcam.attach('camera');
     start.style.display = "none";
     click.style.display = "block";
@@ -103,10 +107,8 @@ front.addEventListener('click',function(){
         width: 320,
         height: 250,
         image_format: 'jpeg',
-        video: { 
-            facingMode: { 
-                    exact: "environment" 
-                } 
+        constraints: {
+            facingMode: 'environment'
         }
     });
     Webcam.attach( 'camera' );
