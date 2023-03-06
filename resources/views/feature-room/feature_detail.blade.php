@@ -61,9 +61,6 @@ function startCamera(){
    width: 320,
    image_format: 'jpeg',
    jpeg_quality: 90,
-   constraints: {
-    video : true,
-   }
 });
     Webcam.attach('camera');
 }
@@ -72,6 +69,7 @@ function frontCamera(){
     Webcam.set({
         width: 320,
         image_format: 'jpeg',
+        jpeg_quality: 90,
         constraints: {
             facingMode: 'environment'
         }
@@ -90,7 +88,7 @@ start.addEventListener('click',function(){
 function snapShoot(){
     Webcam.snap( function(data_uri) {
     document.getElementById('results').innerHTML = 
-     '<img src="'+data_uri+'" class="responsive"/>';
+     '<img src="'+data_uri+'"  width="200px"/>';
      canvasContainer();
 } );
 Webcam.reset();
@@ -153,7 +151,7 @@ upload_file.addEventListener("change",e=>{
     const reader = new FileReader();
     reader.addEventListener('load',()=>{
         let data = reader.result;
-        result.innerHTML ='<img src="'+data+'" />';
+        result.innerHTML ='<img src="'+data+'" width="200px"/>';
         click.style.display = "none";
         Webcam.reset();
         canvasContainer();
